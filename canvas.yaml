@@ -1,0 +1,26 @@
+preset: package
+
+namespace: Joesama\Webhook
+
+paths:
+  src: src
+  resource: resources
+
+factory:
+  path: database/factories
+
+migration:
+  path: database/migrations
+  prefix: ''
+
+console:
+  namespace: Joesama\Webhook\Console
+
+model:
+  namespace: Joesama\Webhook
+
+provider:
+  namespace: Joesama\Webhook\Providers
+
+testing:
+  namespace: Joesama\Webhook\Tests
