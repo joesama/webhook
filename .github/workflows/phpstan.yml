@@ -2,7 +2,7 @@ name: PHPStan
 
 on:
   push:
-    branches: [ master ]
+    branches: [ 1.x ]
   pull_request:
     branches: [ master ]
 
@@ -14,6 +14,9 @@ jobs:
     steps:
 
     - uses: actions/checkout@master
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest --no-dev
 
     - name: PHPStan
       uses: docker://oskarstark/phpstan-ga
