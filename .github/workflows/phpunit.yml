@@ -1,4 +1,4 @@
-name: Package Installation Validation
+name: Webhook Installation Validation
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  webhook:
 
     runs-on: ubuntu-latest
 

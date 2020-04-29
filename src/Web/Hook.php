@@ -1,7 +1,6 @@
 <?php
 namespace Joesama\Webhook\Web;
 
-use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Joesama\Webhook\Web\Ping;
