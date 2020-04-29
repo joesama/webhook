@@ -2,10 +2,13 @@ on: [push]
 name: PHPStan
 jobs:
   phpstan:
-    name: PHPStan
+
     runs-on: ubuntu-latest
+
     steps:
+
     - uses: actions/checkout@master
+
     - name: PHPStan
       uses: docker://oskarstark/phpstan-ga
       with:
