@@ -1,0 +1,41 @@
+build:
+    nodes:
+        analysis:
+            tests:
+                override:
+                    - php-scrutinizer-run
+        coverage:
+          tests:
+            override:
+              - command: vendor/bin/phpunit tests/Feature/TestHook.php
+                coverage:
+                  file: build/logs/clover.xml
+                  format: clover
+before_commands:
+    - 'composer install --prefer-dist --no-interaction'
+filter:
+    paths:
+        - 'src/*'
+    excluded_paths:
+        - 'vendor/*'
+        - 'tests/*'
+tools:
+    php_analyzer: true
+    php_mess_detector: true
+    php_code_sniffer:
+        config:
+            standard: PSR2
+    php_code_coverage:
+        config_path: phpunit.xml
+    php_cpd:
+        excluded_dirs:
+            - vendor
+            - tests
+    php_loc:
+        excluded_dirs:
+            - vendor
+            - tests
+    php_pdepend:
+        excluded_dirs:
+            - vendor
+            - tests

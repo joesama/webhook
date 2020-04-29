@@ -54,7 +54,7 @@ class Hook extends Ping
      *
      * @param array  $request
      * @param string $type
-     * @return WebHook
+     * @return Hook
      */
     public function setRequestBody(array $request, string $type = 'json'): self
     {
@@ -69,7 +69,7 @@ class Hook extends Ping
      * Set request header parameter.
      *
      * @param array $headers
-     * @return $this
+     * @return Hook
      */
     public function setRequestHeader(array $headers): self
     {
@@ -85,7 +85,7 @@ class Hook extends Ping
      * Attached configuration parameters.
      *
      * @param string|array $config
-     * @return $this
+     * @return Hook
      */
     public function configurable($config): self
     {
