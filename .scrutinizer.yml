@@ -12,6 +12,7 @@ build:
                   file: clover.xml
                   format: clover
 before_commands:
+    - 'composer clearcache'
     - 'composer install --prefer-dist --no-interaction'
 filter:
     paths:
