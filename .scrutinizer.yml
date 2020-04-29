@@ -9,7 +9,7 @@ build:
             override:
               - command: vendor/bin/phpunit tests/Feature/TestHook.php
                 coverage:
-                  file: build/logs/clover.xml
+                  file: clover.xml
                   format: clover
 before_commands:
     - 'composer install --prefer-dist --no-interaction'
