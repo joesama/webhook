@@ -14,7 +14,7 @@ class WebHookServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Hook::class, function ($app) {
+        $this->app->singleton(Hook::class, function($app) {
             return new Hook();
         });
     }

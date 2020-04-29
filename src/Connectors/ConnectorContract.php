@@ -33,7 +33,7 @@ interface ConnectorContract
      *
      * @return string
      */
-    public function webHookContentType(): string ;
+    public function webHookContentType(): string;
 
     /**
      * Define request header to attach to request.
