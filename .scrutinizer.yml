@@ -7,7 +7,7 @@ build:
         coverage:
           tests:
             override:
-              - command: vendor/bin/phpunit tests/Feature/TestHook.php
+              - command: vendor/bin/phpunit tests/Feature/TestHook.php --coverage-clover clover.xml
                 coverage:
                   file: clover.xml
                   format: clover
