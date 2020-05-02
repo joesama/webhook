@@ -45,5 +45,6 @@
             "vendor/bin/phpunit tests/Feature/TestHook.php --coverage-clover clover.xml"
         ]
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
