@@ -8,11 +8,18 @@ use Psr\Http\Message\ResponseInterface;
 interface ConnectorContract
 {
     /**
-     * Set connector id.
+     * Get connector id.
      *
      * @return string|null
      */
     public function getConnectorId(): ?string;
+
+    /**
+     * Set connector id.
+     *
+     * @return void
+     */
+    public function setConnectorId(string $id): void;
 
     /**
      * Define configuration parameter to be attach to request.

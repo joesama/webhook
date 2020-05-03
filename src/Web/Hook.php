@@ -173,7 +173,7 @@ class Hook extends Ping
     /**
      * Set url & request method from webhook configurable.
      *
-     * @param string|null $method
+     * @param string $method
      * @param string|null $url
      */
     private function setUrlRequest(string $method, ?string $url): void
@@ -202,11 +202,12 @@ class Hook extends Ping
     /**
      * WebHook HTTP request exception handler.
      *
-     * @param $exception
+     * @param TransferException $exception
+     *
      * @return mixed
      * @throws WebHookException
      */
-    protected function exceptionHandlers($exception)
+    protected function exceptionHandlers(TransferException $exception)
     {
         $this->logExceptionError($exception);
 

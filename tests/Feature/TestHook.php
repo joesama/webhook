@@ -247,7 +247,7 @@ class TestHook extends AbstractTestCase
     }
 
     /** Validate configs */
-    private function configsIsEqual($hook, $expected)
+    protected function configsIsEqual($hook, $expected)
     {
         $this->assertEquals(
             $expected,
@@ -256,7 +256,7 @@ class TestHook extends AbstractTestCase
     }
 
     /** Validate hooks */
-    private function hooksIsEqual($hook, $expected)
+    protected function hooksIsEqual($hook, $expected)
     {
         $this->assertEquals(
             $expected,
@@ -265,7 +265,7 @@ class TestHook extends AbstractTestCase
     }
 
     /** Validate connector */
-    private function connectorIsEqual($hook, $expected)
+    protected function connectorIsEqual($hook, $expected)
     {
         $this->assertEquals(
             $expected,
@@ -274,7 +274,7 @@ class TestHook extends AbstractTestCase
     }
 
     /** Validate connector id */
-    private function connectorIdIsEqual($hook, $expected)
+    protected function connectorIdIsEqual($hook, $expected)
     {
         $this->assertEquals(
             $expected,
@@ -283,7 +283,7 @@ class TestHook extends AbstractTestCase
     }
 
     /** Validate option */
-    private function optionIsEqual($hook, $expected)
+    protected function optionIsEqual($hook, $expected)
     {
         $this->assertEquals(
             $expected,
@@ -292,7 +292,7 @@ class TestHook extends AbstractTestCase
     }
 
     /** Validate method */
-    private function methodIsEqual($hook, $expected)
+    protected function methodIsEqual($hook, $expected)
     {
         $this->assertEquals(
             $expected,
@@ -301,11 +301,11 @@ class TestHook extends AbstractTestCase
     }
 
     /** Validate path uri */
-    private function pathIsEqual($hook, $expected)
+    protected function pathIsEqual($hook, $expected)
     {
         $this->assertEquals(
             $expected,
             $this->getPropertyValue($hook, 'pathUri')
         );
     }
-};
+}

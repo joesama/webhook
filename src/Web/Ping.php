@@ -85,7 +85,7 @@ abstract class Ping
     /**
      * Optional handler for exception.
      *
-     * @param $exception
+     * @param TransferException $exception
      */
-    abstract protected function exceptionHandlers($exception);
+    abstract protected function exceptionHandlers(TransferException $exception);
 }

@@ -9,12 +9,12 @@ class Config
     /**
      * Default webhook config directory.
      */
-    const CONF_DIR = 'webhooks.';
+    public const CONF_DIR = 'webhooks.';
 
     /**
      * Default webhook request key.
      */
-    const REQUEST_URI = 'request';
+    public const REQUEST_URI = 'request';
 
     /**
      * Http configuration parameters.
@@ -39,31 +39,39 @@ class Config
 
     public function __construct($config)
     {
+        $this->configurable = Collection::make([]);
+
         if (is_string($config)) {
-            $config = $this->mapConfiguration(
+            $this->mapConfiguration(
                 config($config, config(self::CONF_DIR . $config))
             );
+        } else {
+            $this->configurable = $this->configurable->merge($config);
         }
 
-        $this->configs = $config;
+        $this->configs = $this->excludeConfigurable();
     }
 
     /**
      * Map configuration parameter to it domain.
      *
      * @param array $config
-     * @return array
+     * @return void
      */
-    private function mapConfiguration(array $config = []): array
+    private function mapConfiguration(array $config = []): void
     {
-        if (empty($config)) {
-            return [];
-        }
-
-        $this->configurable = collect($config);
+        $this->configurable = $this->configurable->merge($config);
 
         $this->hooks = $this->configurable->get(self::REQUEST_URI);
+    }
 
+    /**
+     * Exclude configurable from body
+     *
+     * @return array
+     */
+    protected function excludeConfigurable(): array
+    {
         return $this->configurable->except([
             RequestOptions::BODY,
             RequestOptions::FORM_PARAMS,
