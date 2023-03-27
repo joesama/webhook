@@ -1,16 +1,16 @@
 <?php
+
 namespace Joesama\Webhook\Web;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Joesama\Webhook\Web\Ping;
+use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Joesama\Webhook\Connectors\ConnectorContract;
+use Joesama\Webhook\Exceptions\WebHookException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Exception\TransferException;
-use Joesama\Webhook\Exceptions\WebHookException;
-use Joesama\Webhook\Connectors\ConnectorContract;
 
 class Hook extends Ping
 {
@@ -38,7 +38,7 @@ class Hook extends Ping
     /**
      * WebHook constructor.
      *
-     * @param ConnectorContract|array $config|string $config
+     * @param  ConnectorContract|array  $config|string $config
      */
     public function __construct($config = [])
     {
@@ -51,10 +51,6 @@ class Hook extends Ping
 
     /**
      * Set the request body parameter.
-     *
-     * @param array  $request
-     * @param string $type
-     * @return Hook
      */
     public function setRequestBody(array $request, string $type = 'json'): self
     {
@@ -67,9 +63,6 @@ class Hook extends Ping
 
     /**
      * Set request header parameter.
-     *
-     * @param array $headers
-     * @return Hook
      */
     public function setRequestHeader(array $headers): self
     {
@@ -84,8 +77,7 @@ class Hook extends Ping
     /**
      * Attached configuration parameters.
      *
-     * @param string|array $config
-     * @return Hook
+     * @param  string|array  $config
      */
     public function configurable($config): self
     {
@@ -97,8 +89,8 @@ class Hook extends Ping
     /**
      * Get response from end point.
      *
-     * @param string $url    Endpoint URL
-     * @param string $method Request method
+     * @param  string  $url    Endpoint URL
+     * @param  string  $method Request method
      * @return mixed
      */
     public function getResponse(string $url = null, string $method = 'POST')
@@ -111,8 +103,7 @@ class Hook extends Ping
     /**
      * Prepare configuration parameter.
      *
-     * @param array|string $config
-     * @return array
+     * @param  array|string  $config
      */
     private function webHookConfigurable($config): array
     {
@@ -129,8 +120,6 @@ class Hook extends Ping
 
     /**
      * Implement WebHookConnector definition.
-     *
-     * @param ConnectorContract $connector
      */
     private function implementWebHookConnector(ConnectorContract $connector): void
     {
@@ -154,8 +143,6 @@ class Hook extends Ping
 
     /**
      * Map request content with header content type.
-     *
-     * @param string $type
      */
     private function mapContentType(string $type): void
     {
@@ -172,22 +159,17 @@ class Hook extends Ping
 
     /**
      * Set url & request method from webhook configurable.
-     *
-     * @param string $method
-     * @param string|null $url
      */
     private function setUrlRequest(string $method, ?string $url): void
     {
         $this->method = $method;
 
-        $this->pathUri = Str::contains($url, '/') ? $url : Arr::get($this->hooks, $url . '.' . $method, $url);
+        $this->pathUri = Str::contains($url, '/') ? $url : Arr::get($this->hooks, $url.'.'.$method, $url);
     }
 
     /**
      * WebHook HTTP response handler.
      *
-     * @param ResponseInterface $response
-     * @param RequestInterface  $request
      * @return mixed
      */
     private function responseHandler(ResponseInterface $response, RequestInterface $request)
@@ -202,9 +184,9 @@ class Hook extends Ping
     /**
      * WebHook HTTP request exception handler.
      *
-     * @param TransferException $exception
      *
      * @return mixed
+     *
      * @throws WebHookException
      */
     protected function exceptionHandlers(TransferException $exception)
@@ -214,14 +196,12 @@ class Hook extends Ping
         if ($this->connector instanceof ConnectorContract) {
             return $this->connector->webHookException($exception, $this->getPsr7RequestHeader());
         }
- 
+
         throw new WebHookException($exception->getMessage(), $exception->getCode(), $exception);
     }
 
     /**
      * Log error exception produce.
-     *
-     * @param TransferException $exception
      */
     private function logExceptionError(TransferException $exception): void
     {
@@ -239,9 +219,6 @@ class Hook extends Ping
 
     /**
      * Sent critical notification to application log.
-     *
-     * @param TransferException $exception
-     * @param array             $logData
      */
     private function notifyCriticalLog(TransferException $exception, array $logData): void
     {
@@ -252,15 +229,13 @@ class Hook extends Ping
                 'file' => $exception->getFile(),
                 'code' => $exception->getCode(),
                 'url' => $logData['endpoint'],
-                'method' => $this->method
+                'method' => $this->method,
             ]
         );
     }
 
     /**
      * Save the log data to data base.
-     *
-     * @param array $logData
      */
     private function saveLogToDatabase(array $logData)
     {
@@ -272,8 +247,6 @@ class Hook extends Ping
 
     /**
      * Format the log data.
-     *
-     * @return array
      */
     private function logDataFormat(): array
     {
@@ -281,9 +254,9 @@ class Hook extends Ping
 
         return [
             'method' => $this->method,
-            'endpoint' => Arr::first($request->getHeader('base_uri')) . $request->getUri()->getPath(),
+            'endpoint' => Arr::first($request->getHeader('base_uri')).$request->getUri()->getPath(),
             'request' => array_merge($this->configs, $this->options),
-            'response' => null
+            'response' => null,
         ];
     }
 }

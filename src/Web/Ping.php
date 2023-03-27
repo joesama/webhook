@@ -1,4 +1,5 @@
 <?php
+
 namespace Joesama\Webhook\Web;
 
 use GuzzleHttp\Client;
@@ -46,8 +47,6 @@ abstract class Ping
 
     /**
      * Dispatch HTTP request.
-     *
-     * @return ResponseInterface
      */
     final protected function dispatch(): ResponseInterface
     {
@@ -84,8 +83,6 @@ abstract class Ping
 
     /**
      * Optional handler for exception.
-     *
-     * @param TransferException $exception
      */
     abstract protected function exceptionHandlers(TransferException $exception);
 }

@@ -2,11 +2,9 @@
 
 namespace Joesama\Webhook\Tests\Feature;
 
-use Joesama\Webhook\Web\Hook;
 use GuzzleHttp\RequestOptions;
 use Joesama\Webhook\Tests\AbstractTestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Joesama\Webhook\Web\Hook;
 
 class TestHook extends AbstractTestCase
 {
@@ -70,7 +68,7 @@ class TestHook extends AbstractTestCase
     public function initiateHookWithArray()
     {
         $config = [
-            'base_uri' => 'https://www.google.com'
+            'base_uri' => 'https://www.google.com',
         ];
 
         $hook = new Hook($config);
@@ -94,7 +92,7 @@ class TestHook extends AbstractTestCase
     public function setHookConfigurable()
     {
         $config = [
-            'base_uri' => 'https://www.google.com'
+            'base_uri' => 'https://www.google.com',
         ];
 
         $hook = new Hook();
@@ -114,14 +112,14 @@ class TestHook extends AbstractTestCase
     public function setHookRequestHeader()
     {
         $config = [
-            'base_uri' => 'https://www.google.com'
+            'base_uri' => 'https://www.google.com',
         ];
 
         $hook = new Hook();
 
         $hook->setRequestHeader($config);
 
-        $this->configsIsEqual($hook, [ 'headers' => $config ]);
+        $this->configsIsEqual($hook, ['headers' => $config]);
     }
 
     /**
@@ -135,7 +133,7 @@ class TestHook extends AbstractTestCase
     public function setHookArrayRequestBody()
     {
         $config = [
-            'base_uri' => 'https://www.google.com'
+            'base_uri' => 'https://www.google.com',
         ];
 
         $hook = new Hook();
@@ -144,7 +142,7 @@ class TestHook extends AbstractTestCase
 
         $this->configsIsEqual($hook, []);
 
-        $this->optionIsEqual($hook, ['array' => $config ]);
+        $this->optionIsEqual($hook, ['array' => $config]);
     }
 
     /**
@@ -157,7 +155,7 @@ class TestHook extends AbstractTestCase
     public function setHookJsonRequestBody()
     {
         $config = [
-            'base_uri' => 'https://www.google.com'
+            'base_uri' => 'https://www.google.com',
         ];
 
         $hook = new Hook();
@@ -167,11 +165,11 @@ class TestHook extends AbstractTestCase
         $this->configsIsEqual(
             $hook,
             [
-                'headers' => ['Content-type' => 'application/json']
+                'headers' => ['Content-type' => 'application/json'],
             ]
         );
 
-        $this->optionIsEqual($hook, [RequestOptions::JSON => $config ]);
+        $this->optionIsEqual($hook, [RequestOptions::JSON => $config]);
     }
 
     /**
@@ -184,7 +182,7 @@ class TestHook extends AbstractTestCase
     public function setHookMultiPartRequestBody()
     {
         $config = [
-            'base_uri' => 'https://www.google.com'
+            'base_uri' => 'https://www.google.com',
         ];
 
         $hook = new Hook();
@@ -194,11 +192,11 @@ class TestHook extends AbstractTestCase
         $this->configsIsEqual(
             $hook,
             [
-                'headers' => ['Content-type' => 'multipart/form-data']
+                'headers' => ['Content-type' => 'multipart/form-data'],
             ]
         );
 
-        $this->optionIsEqual($hook, [RequestOptions::MULTIPART => $config ]);
+        $this->optionIsEqual($hook, [RequestOptions::MULTIPART => $config]);
     }
 
     /**
@@ -211,7 +209,7 @@ class TestHook extends AbstractTestCase
     public function setHookFormParamsRequestBody()
     {
         $config = [
-            'base_uri' => 'https://www.google.com'
+            'base_uri' => 'https://www.google.com',
         ];
 
         $hook = new Hook();
@@ -221,11 +219,11 @@ class TestHook extends AbstractTestCase
         $this->configsIsEqual(
             $hook,
             [
-                'headers' => ['Content-type' => 'application/x-www-form-urlencoded']
+                'headers' => ['Content-type' => 'application/x-www-form-urlencoded'],
             ]
         );
 
-        $this->optionIsEqual($hook, [RequestOptions::FORM_PARAMS => $config ]);
+        $this->optionIsEqual($hook, [RequestOptions::FORM_PARAMS => $config]);
     }
 
     /**

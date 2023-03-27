@@ -1,4 +1,5 @@
 <?php
+
 namespace Joesama\Webhook\Connectors;
 
 use GuzzleHttp\Exception\BadResponseException;
@@ -19,8 +20,6 @@ abstract class AbstractConnector
 
     /**
      * Define request content type.
-     *
-     * @return string
      */
     public function webHookContentType(): string
     {
@@ -30,14 +29,12 @@ abstract class AbstractConnector
     /**
      * Define additional handling HTTP request response.
      *
-     * @param ResponseInterface $response
-     * @param RequestInterface  $request
      * @return mixed
      */
     public function webHookResponse(ResponseInterface $response, RequestInterface $request)
     {
         $responseContent = $response->getBody()->getContents();
-        
+
         if (($jsonResponse = json_decode($responseContent, true)) === null) {
             return $responseContent;
         }
@@ -48,8 +45,6 @@ abstract class AbstractConnector
     /**
      * Define additional handling for exceptions.
      *
-     * @param TransferException $exception
-     * @param RequestInterface  $request
      * @return mixed
      */
     public function webHookException(TransferException $exception, RequestInterface $request)
@@ -71,9 +66,6 @@ abstract class AbstractConnector
 
     /**
      * Save data to data storage.
-     *
-     * @param array $logData
-     * @return void
      */
     public function webHookSavingData(array $logData): void
     {
@@ -82,8 +74,6 @@ abstract class AbstractConnector
 
     /**
      * Set connector id.
-     *
-     * @param string $connectorId
      */
     public function setConnectorId(string $connectorId): void
     {
@@ -92,8 +82,6 @@ abstract class AbstractConnector
 
     /**
      * Set connector id.
-     *
-     * @return string|null
      */
     public function getConnectorId(): ?string
     {

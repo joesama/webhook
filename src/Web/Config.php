@@ -1,4 +1,5 @@
 <?php
+
 namespace Joesama\Webhook\Web;
 
 use GuzzleHttp\RequestOptions;
@@ -43,7 +44,7 @@ class Config
 
         if (is_string($config)) {
             $this->mapConfiguration(
-                config($config, config(self::CONF_DIR . $config))
+                config($config, config(self::CONF_DIR.$config))
             );
         } else {
             $this->configurable = $this->configurable->merge($config);
@@ -54,9 +55,6 @@ class Config
 
     /**
      * Map configuration parameter to it domain.
-     *
-     * @param array $config
-     * @return void
      */
     private function mapConfiguration(array $config = []): void
     {
@@ -67,8 +65,6 @@ class Config
 
     /**
      * Exclude configurable from body
-     *
-     * @return array
      */
     protected function excludeConfigurable(): array
     {
@@ -78,7 +74,7 @@ class Config
             RequestOptions::JSON,
             RequestOptions::MULTIPART,
             RequestOptions::QUERY,
-            self::REQUEST_URI
+            self::REQUEST_URI,
         ])->toArray();
     }
 

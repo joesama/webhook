@@ -2,10 +2,10 @@
 
 namespace Joesama\Webhook\Tests\Unit;
 
-use TypeError;
 use GuzzleHttp\RequestOptions;
-use Joesama\Webhook\Web\Config;
 use Joesama\Webhook\Tests\AbstractTestCase;
+use Joesama\Webhook\Web\Config;
+use TypeError;
 
 class TestConfig extends AbstractTestCase
 {
@@ -30,12 +30,12 @@ class TestConfig extends AbstractTestCase
         // Setup default database to use sqlite :memory:
         $app['config']->set('webhooks.test', [
             'base_uri' => 'test.com',
-            RequestOptions::BODY => [ 'content' => RequestOptions::BODY],
-            RequestOptions::FORM_PARAMS => [ 'content' =>  RequestOptions::FORM_PARAMS],
-            RequestOptions::JSON => [ 'content' =>  RequestOptions::JSON],
-            RequestOptions::MULTIPART => [ 'content' =>  RequestOptions::MULTIPART],
-            RequestOptions::QUERY => [ 'content' =>  RequestOptions::QUERY],
-            Config::REQUEST_URI  => [ 'content' =>  Config::REQUEST_URI]
+            RequestOptions::BODY => ['content' => RequestOptions::BODY],
+            RequestOptions::FORM_PARAMS => ['content' => RequestOptions::FORM_PARAMS],
+            RequestOptions::JSON => ['content' => RequestOptions::JSON],
+            RequestOptions::MULTIPART => ['content' => RequestOptions::MULTIPART],
+            RequestOptions::QUERY => ['content' => RequestOptions::QUERY],
+            Config::REQUEST_URI => ['content' => Config::REQUEST_URI],
         ]);
     }
 
@@ -49,12 +49,12 @@ class TestConfig extends AbstractTestCase
     public function initiateConfigWithArrayParameter()
     {
         $array = [
-            RequestOptions::BODY => [ 'content' => RequestOptions::BODY],
-            RequestOptions::FORM_PARAMS => [ 'content' =>  RequestOptions::FORM_PARAMS],
-            RequestOptions::JSON => [ 'content' =>  RequestOptions::JSON],
-            RequestOptions::MULTIPART => [ 'content' =>  RequestOptions::MULTIPART],
-            RequestOptions::QUERY => [ 'content' =>  RequestOptions::QUERY],
-            Config::REQUEST_URI  => [ 'content' =>  Config::REQUEST_URI]
+            RequestOptions::BODY => ['content' => RequestOptions::BODY],
+            RequestOptions::FORM_PARAMS => ['content' => RequestOptions::FORM_PARAMS],
+            RequestOptions::JSON => ['content' => RequestOptions::JSON],
+            RequestOptions::MULTIPART => ['content' => RequestOptions::MULTIPART],
+            RequestOptions::QUERY => ['content' => RequestOptions::QUERY],
+            Config::REQUEST_URI => ['content' => Config::REQUEST_URI],
         ];
 
         $config = new Config($array);
@@ -81,6 +81,7 @@ class TestConfig extends AbstractTestCase
 
         $config = new Config('example');
     }
+
     /**
      * @testdox Config can be initiated when config file name passed as parameter.
      *
