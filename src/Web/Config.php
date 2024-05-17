@@ -48,7 +48,7 @@ class Config
 
         $this->configs = $this->excludeBodyConfig();
 
-        $this->hooks = $this->configurable->get(self::REQUEST_URI);
+        $this->hooks = $this->configurable->get(self::REQUEST_URI, []);
     }
 
     /**

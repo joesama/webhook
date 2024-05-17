@@ -31,9 +31,9 @@ class Hook extends Ping
     /**
      * Connector id definition.
      *
-     * @var string
+     * @var string|null
      */
-    private string $connectorId;
+    private ?string $connectorId = null;
 
     /**
      * WebHook constructor.
@@ -52,9 +52,11 @@ class Hook extends Ping
      */
     public function setRequestBody(array $request, string $type = 'json'): self
     {
-        $this->mapContentType($type);
-
         $this->options[$type] = $request;
+
+        if ($contentType = $this->mapContentType($type)) {
+            $this->setRequestHeader(['Content-type' => $contentType]);
+        }
 
         return $this;
     }
@@ -107,15 +109,11 @@ class Hook extends Ping
      */
     private function webHookConfigurable(array|string $config): array
     {
-        if (is_string($config)) {
-            $hookConfig = new Config($config);
+        $hookConfig = new Config($config);
 
-            $config = $hookConfig->configs;
+        $this->hooks = $hookConfig->hooks;
 
-            $this->hooks = $hookConfig->hooks;
-        }
-
-        return array_merge($config, $this->configs);
+        return array_merge($hookConfig->configs, $this->configs);
     }
 
     /**
@@ -268,13 +266,16 @@ class Hook extends Ping
 
         $configs = $this->webHookConfigurable($connector->webHookConfiguration());
 
-        $configs[RequestOptions::HEADERS] = array_merge(
-            Arr::get($this->configs, RequestOptions::HEADERS, []),
-            $connector->webHookHeader(),
-            ['Content-type' => $this->mapContentType($connector->webHookContentType())]
+        $type = $connector->webHookContentType();
+        $contentType = $this->mapContentType($type);
+
+        $configs[RequestOptions::HEADERS] = array_merge(array_merge(
+                $connector->webHookHeader(),
+                $contentType ? ['Content-type' => $contentType] : []
+            )
         );
 
-        $this->options[$connector->webHookContentType()] = $connector->webHookContent();
+        $this->options[$type] = $connector->webHookContent();
 
         return $configs;
     }

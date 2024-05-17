@@ -31,7 +31,7 @@ class TestHook extends AbstractTestCase
 
         $this->configsIsEqual($hook, []);
 
-        $this->hooksIsEqual($hook, null);
+        $this->hooksIsEqual($hook, []);
 
         $this->connectorIsEqual($hook, null);
 
@@ -51,7 +51,7 @@ class TestHook extends AbstractTestCase
 
         $this->configsIsEqual($hook, []);
 
-        $this->hooksIsEqual($hook, null);
+        $this->hooksIsEqual($hook, []);
 
         $this->connectorIsEqual($hook, null);
 
@@ -75,7 +75,7 @@ class TestHook extends AbstractTestCase
 
         $this->configsIsEqual($hook, $config);
 
-        $this->hooksIsEqual($hook, null);
+        $this->hooksIsEqual($hook, []);
 
         $this->connectorIsEqual($hook, null);
 

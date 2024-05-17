@@ -38,7 +38,7 @@ class HookConnectorTest extends TestHook
             ],
         ]);
 
-        $this->hooksIsEqual($hook, null);
+        $this->hooksIsEqual($hook, []);
 
         $this->connectorIsEqual($hook, $connector);
 
@@ -47,6 +47,6 @@ class HookConnectorTest extends TestHook
             ['json' => []]
         );
 
-        $this->connectorIdIsEqual($hook, class_basename(ExamplesConnector::class));
+        $this->connectorIdIsEqual($hook, strtolower(class_basename(ExamplesConnector::class)));
     }
 }

@@ -77,9 +77,13 @@ class TestConfig extends AbstractTestCase
      */
     public function initiateConfigWithStringParameter()
     {
-        $this->expectException(TypeError::class);
+        $config = new Config('webhooks.test');
 
-        $config = new Config('example');
+        $this->assertNotEmpty($config->hooks);
+
+        $this->assertNotEmpty($config->configs);
+
+        $this->assertEquals(config('webhooks.test'), $config->toArray());
     }
 
     /**

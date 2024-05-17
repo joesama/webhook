@@ -15,35 +15,35 @@ abstract class Ping
      *
      * @var array
      */
-    protected $configs = [];
+    protected array $configs = [];
 
     /**
      * Request method..
      *
      * @var string
      */
-    protected $method;
+    protected string $method;
 
     /**
      * Endpoint base URI.
      *
      * @var string
      */
-    protected $pathUri;
+    protected string $pathUri;
 
     /**
      * Request payload parameters.
      *
      * @var array
      */
-    protected $options;
+    protected array $options;
 
     /**
      * Request parameter.
      *
      * @var RequestInterface
      */
-    protected $request;
+    protected RequestInterface $request;
 
     /**
      * Dispatch HTTP request.
