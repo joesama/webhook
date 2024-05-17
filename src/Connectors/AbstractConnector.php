@@ -16,7 +16,15 @@ abstract class AbstractConnector
      *
      * @var string
      */
-    private $webHookConnectorId;
+    private string $webHookConnectorId;
+
+    /**
+     * Initiate connector constructor
+     */
+    public function __construct()
+    {
+        $this->setConnectorId(strtolower(class_basename($this)));
+    }
 
     /**
      * Define request content type.
@@ -47,7 +55,7 @@ abstract class AbstractConnector
      *
      * @return mixed
      */
-    public function webHookException(TransferException $exception, RequestInterface $request)
+    public function webHookException(TransferException $exception, RequestInterface $request): mixed
     {
         if ($exception instanceof BadResponseException) {
             $response = new Response(

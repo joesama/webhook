@@ -22,43 +22,31 @@ class Config
      *
      * @var array
      */
-    public $configs;
+    public array $configs;
 
     /**
      * WebHook configuration parameters.
      *
      * @var array
      */
-    public $hooks;
+    public array $hooks;
 
     /**
      * Configuration parameters.
      *
      * @var Collection
      */
-    private $configurable;
+    private Collection $configurable;
 
     public function __construct($config)
     {
-        $this->configurable = Collection::make([]);
-
         if (is_string($config)) {
-            $this->mapConfiguration(
-                config($config, config(self::CONF_DIR.$config))
-            );
-        } else {
-            $this->configurable = $this->configurable->merge($config);
+            $config = config($config, config(self::CONF_DIR . $config, []));
         }
 
-        $this->configs = $this->excludeConfigurable();
-    }
+        $this->configurable = new Collection($config);
 
-    /**
-     * Map configuration parameter to it domain.
-     */
-    private function mapConfiguration(array $config = []): void
-    {
-        $this->configurable = $this->configurable->merge($config);
+        $this->configs = $this->excludeBodyConfig();
 
         $this->hooks = $this->configurable->get(self::REQUEST_URI);
     }
@@ -66,7 +54,7 @@ class Config
     /**
      * Exclude configurable from body
      */
-    protected function excludeConfigurable(): array
+    protected function excludeBodyConfig(): array
     {
         return $this->configurable->except([
             RequestOptions::BODY,
@@ -83,7 +71,7 @@ class Config
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->configurable->toArray();
     }

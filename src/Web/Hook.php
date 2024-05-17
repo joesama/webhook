@@ -19,34 +19,32 @@ class Hook extends Ping
      *
      * @var array
      */
-    private $hooks;
+    private array $hooks;
 
     /**
      * Implementation of ConnectorContract.
      *
-     * @var ConnectorContract
+     * @var ConnectorContract|null
      */
-    private $connector;
+    private ?ConnectorContract $connector = null;
 
     /**
      * Connector id definition.
      *
      * @var string
      */
-    private $connectorId;
+    private string $connectorId;
 
     /**
      * WebHook constructor.
      *
-     * @param  ConnectorContract|array  $config|string $config
+     * @param ConnectorContract|array|string $config |string $config
      */
-    public function __construct($config = [])
+    public function __construct(ConnectorContract|array|string $config = [])
     {
-        if ($config instanceof ConnectorContract) {
-            $this->implementWebHookConnector($config);
-        } else {
-            $this->configs = $this->webHookConfigurable($config);
-        }
+        $this->configs = ($config instanceof ConnectorContract) ?
+            $this->connectorConfigurable($config) :
+            $this->webHookConfigurable($config);
     }
 
     /**
@@ -77,9 +75,10 @@ class Hook extends Ping
     /**
      * Attached configuration parameters.
      *
-     * @param  string|array  $config
+     * @param array|string $config
+     * @return Hook
      */
-    public function configurable($config): self
+    public function configurable(array|string $config): self
     {
         $this->configs = $this->webHookConfigurable($config);
 
@@ -89,8 +88,8 @@ class Hook extends Ping
     /**
      * Get response from end point.
      *
-     * @param  string  $url    Endpoint URL
-     * @param  string  $method Request method
+     * @param string|null $url Endpoint URL
+     * @param string $method Request method
      * @return mixed
      */
     public function getResponse(string $url = null, string $method = 'POST')
@@ -103,9 +102,10 @@ class Hook extends Ping
     /**
      * Prepare configuration parameter.
      *
-     * @param  array|string  $config
+     * @param array|string $config
+     * @return array
      */
-    private function webHookConfigurable($config): array
+    private function webHookConfigurable(array|string $config): array
     {
         if (is_string($config)) {
             $hookConfig = new Config($config);
@@ -119,32 +119,25 @@ class Hook extends Ping
     }
 
     /**
-     * Implement WebHookConnector definition.
+     *  Implement WebHookConnector definition.
+     *
+     * @param ConnectorContract $connector
+     * @return void
      */
     private function implementWebHookConnector(ConnectorContract $connector): void
     {
         $this->connector = $connector;
 
-        $connector->setConnectorId(class_basename($connector));
-
         $this->connectorId = $connector->getConnectorId();
-
-        $this->configs = $this->webHookConfigurable($connector->webHookConfiguration());
-
-        $this->mapContentType($connector->webHookContentType());
-
-        $this->configs[RequestOptions::HEADERS] = array_merge(
-            Arr::get($this->configs, RequestOptions::HEADERS, []),
-            $connector->webHookHeader()
-        );
-
-        $this->options[$connector->webHookContentType()] = $connector->webHookContent();
     }
 
     /**
      * Map request content with header content type.
+     *
+     * @param string $type
+     * @return string|null
      */
-    private function mapContentType(string $type): void
+    private function mapContentType(string $type): ?string
     {
         $default = [
             RequestOptions::JSON => 'application/json',
@@ -152,27 +145,31 @@ class Hook extends Ping
             RequestOptions::FORM_PARAMS => 'application/x-www-form-urlencoded',
         ];
 
-        if (($contentType = Arr::get($default, strtolower($type), null)) !== null) {
-            $this->configs[RequestOptions::HEADERS]['Content-type'] = $contentType;
-        }
+        return Arr::get($default, strtolower($type), null);
     }
 
     /**
      * Set url & request method from webhook configurable.
+     *
+     * @param string $method
+     * @param string|null $url
+     * @return void
      */
     private function setUrlRequest(string $method, ?string $url): void
     {
         $this->method = $method;
 
-        $this->pathUri = Str::contains($url, '/') ? $url : Arr::get($this->hooks, $url.'.'.$method, $url);
+        $this->pathUri = Str::contains($url, '/') ? $url : Arr::get($this->hooks, $url. '.' .$method, $url);
     }
 
     /**
      * WebHook HTTP response handler.
      *
+     * @param ResponseInterface $response
+     * @param RequestInterface $request
      * @return mixed
      */
-    private function responseHandler(ResponseInterface $response, RequestInterface $request)
+    private function responseHandler(ResponseInterface $response, RequestInterface $request): mixed
     {
         if ($this->connector instanceof ConnectorContract) {
             return $this->connector->webHookResponse($response, $request);
@@ -185,15 +182,16 @@ class Hook extends Ping
      * WebHook HTTP request exception handler.
      *
      *
+     * @param TransferException $exception
      * @return mixed
      *
      * @throws WebHookException
      */
-    protected function exceptionHandlers(TransferException $exception)
+    protected function exceptionHandlers(TransferException $exception): mixed
     {
         $this->logExceptionError($exception);
 
-        if ($this->connector instanceof ConnectorContract) {
+        if ($this->connector) {
             return $this->connector->webHookException($exception, $this->getPsr7RequestHeader());
         }
 
@@ -254,9 +252,30 @@ class Hook extends Ping
 
         return [
             'method' => $this->method,
-            'endpoint' => Arr::first($request->getHeader('base_uri')).$request->getUri()->getPath(),
+            'endpoint' => Arr::first($request->getHeader('base_uri')) . $request->getUri()->getPath(),
             'request' => array_merge($this->configs, $this->options),
             'response' => null,
         ];
+    }
+
+    /**
+     * @param ConnectorContract $connector
+     * @return array
+     */
+    protected function connectorConfigurable(ConnectorContract $connector):array
+    {
+        $this->implementWebHookConnector($connector);
+
+        $configs = $this->webHookConfigurable($connector->webHookConfiguration());
+
+        $configs[RequestOptions::HEADERS] = array_merge(
+            Arr::get($this->configs, RequestOptions::HEADERS, []),
+            $connector->webHookHeader(),
+            ['Content-type' => $this->mapContentType($connector->webHookContentType())]
+        );
+
+        $this->options[$connector->webHookContentType()] = $connector->webHookContent();
+
+        return $configs;
     }
 }
