@@ -2,7 +2,6 @@
 
 namespace Joesama\Webhook\Providers;
 
-use Joesama\Webhook\Web\Hook;
 use Illuminate\Support\ServiceProvider;
 
 class WebHookServiceProvider extends ServiceProvider

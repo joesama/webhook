@@ -2,8 +2,8 @@
 
 namespace Joesama\Webhook\Tests\Feature;
 
-use Joesama\Webhook\Web\Hook;
 use Joesama\Webhook\Examples\ExamplesConnector;
+use Joesama\Webhook\Web\Hook;
 
 class HookConnectorTest extends TestHook
 {
@@ -15,7 +15,7 @@ class HookConnectorTest extends TestHook
         parent::setUp();
 
         $this->mock(Hook::class)->shouldReceive('__contructor')->withArgs([
-            ExamplesConnector::class
+            ExamplesConnector::class,
         ]);
     }
 
@@ -33,20 +33,20 @@ class HookConnectorTest extends TestHook
         $hook = new Hook($connector);
 
         $this->configsIsEqual($hook, [
-            "headers" => [
-                "Content-type" => "application/json"
-            ]
+            'headers' => [
+                'Content-type' => 'application/json',
+            ],
         ]);
 
-        $this->hooksIsEqual($hook, null);
+        $this->hooksIsEqual($hook, []);
 
         $this->connectorIsEqual($hook, $connector);
 
         $this->optionIsEqual(
             $hook,
-            ["json" => []]
+            ['json' => []]
         );
 
-        $this->connectorIdIsEqual($hook, class_basename(ExamplesConnector::class));
+        $this->connectorIdIsEqual($hook, strtolower(class_basename(ExamplesConnector::class)));
     }
 }

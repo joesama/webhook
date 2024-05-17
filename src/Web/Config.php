@@ -1,4 +1,5 @@
 <?php
+
 namespace Joesama\Webhook\Web;
 
 use GuzzleHttp\RequestOptions;
@@ -21,56 +22,39 @@ class Config
      *
      * @var array
      */
-    public $configs;
+    public array $configs;
 
     /**
      * WebHook configuration parameters.
      *
      * @var array
      */
-    public $hooks;
+    public array $hooks;
 
     /**
      * Configuration parameters.
      *
      * @var Collection
      */
-    private $configurable;
+    private Collection $configurable;
 
     public function __construct($config)
     {
-        $this->configurable = Collection::make([]);
-
         if (is_string($config)) {
-            $this->mapConfiguration(
-                config($config, config(self::CONF_DIR . $config))
-            );
-        } else {
-            $this->configurable = $this->configurable->merge($config);
+            $config = config($config, config(self::CONF_DIR . $config, []));
         }
 
-        $this->configs = $this->excludeConfigurable();
-    }
+        $this->configurable = new Collection($config);
 
-    /**
-     * Map configuration parameter to it domain.
-     *
-     * @param array $config
-     * @return void
-     */
-    private function mapConfiguration(array $config = []): void
-    {
-        $this->configurable = $this->configurable->merge($config);
+        $this->configs = $this->excludeBodyConfig();
 
-        $this->hooks = $this->configurable->get(self::REQUEST_URI);
+        $this->hooks = $this->configurable->get(self::REQUEST_URI, []);
     }
 
     /**
      * Exclude configurable from body
-     *
-     * @return array
      */
-    protected function excludeConfigurable(): array
+    protected function excludeBodyConfig(): array
     {
         return $this->configurable->except([
             RequestOptions::BODY,
@@ -78,7 +62,7 @@ class Config
             RequestOptions::JSON,
             RequestOptions::MULTIPART,
             RequestOptions::QUERY,
-            self::REQUEST_URI
+            self::REQUEST_URI,
         ])->toArray();
     }
 
@@ -87,7 +71,7 @@ class Config
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->configurable->toArray();
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Joesama\Webhook\Examples;
 
 use Joesama\Webhook\Connectors\AbstractConnector;
@@ -7,10 +8,8 @@ use Joesama\Webhook\Connectors\ConnectorContract;
 class ExamplesConnector extends AbstractConnector implements ConnectorContract
 {
     /**
-    * Define configuration parameter to be attach to request.
-    *
-    * @return array
-    */
+     * Define configuration parameter to be attach to request.
+     */
     public function webHookConfiguration(): array
     {
         return [];
@@ -18,18 +17,14 @@ class ExamplesConnector extends AbstractConnector implements ConnectorContract
 
     /**
      * Define request content to be send.
-     *
-     * @return array
      */
     public function webHookContent(): array
     {
         return [];
     }
-    
+
     /**
      * Define request header to attach to request.
-     *
-     * @return array
      */
     public function webHookHeader(): array
     {

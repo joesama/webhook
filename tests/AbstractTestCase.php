@@ -2,13 +2,12 @@
 
 namespace Joesama\Webhook\Tests;
 
+use Orchestra\Testbench\TestCase as Testbench;
 use ReflectionClass;
 use ReflectionProperty;
-use Orchestra\Testbench\TestCase as Testbench;
 
 abstract class AbstractTestCase extends Testbench
 {
-
     /** Get property value */
     protected function getPropertyValue($class, string $propertyName)
     {
@@ -21,9 +20,9 @@ abstract class AbstractTestCase extends Testbench
     protected function accessProperty(string $classname, string $propertyName): ReflectionProperty
     {
         $reflector = new ReflectionClass($classname);
-        
+
         $property = $reflector->getProperty($propertyName);
-        
+
         $property->setAccessible(true);
 
         return $property;

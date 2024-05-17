@@ -1,4 +1,5 @@
 <?php
+
 namespace Joesama\Webhook\Exceptions;
 
 use Exception;
