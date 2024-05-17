@@ -41,7 +41,9 @@
     },
     "scripts": {
         "testing": [
-            "vendor/bin/phpunit tests/Feature/TestHook.php --coverage-clover clover.xml"
+            "vendor/bin/phpunit tests/Feature/TestHook.php",
+            "vendor/bin/phpunit tests/Feature/HookConnectorTest.php",
+            "vendor/bin/phpunit tests/Unit/TestConfig.php"
         ]
     },
     "minimum-stability": "dev",
