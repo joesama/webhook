@@ -169,7 +169,7 @@ class Hook extends Ping
      */
     private function responseHandler(ResponseInterface $response, RequestInterface $request): mixed
     {
-        if ($this->connector instanceof ConnectorContract) {
+        if ($this->connector) {
             return $this->connector->webHookResponse($response, $request);
         }
 
@@ -205,7 +205,7 @@ class Hook extends Ping
 
         $logData['response'] = $exception->getMessage();
 
-        if ($this->connector instanceof ConnectorContract) {
+        if ($this->connector) {
             //Need to notify system log error has occurs as the exception are handles.
             $this->notifyCriticalLog($exception, $logData);
         }
@@ -235,7 +235,7 @@ class Hook extends Ping
      */
     private function saveLogToDatabase(array $logData)
     {
-        if ($this->connector instanceof ConnectorContract) {
+        if ($this->connector) {
             //Saving log to data storage or etc...
             $this->connector->webHookSavingData($logData);
         }
