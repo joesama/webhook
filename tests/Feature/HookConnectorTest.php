@@ -4,6 +4,8 @@ namespace Joesama\Webhook\Tests\Feature;
 
 use Joesama\Webhook\Examples\ExamplesConnector;
 use Joesama\Webhook\Web\Hook;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 
 class HookConnectorTest extends TestHook
 {
@@ -19,13 +21,8 @@ class HookConnectorTest extends TestHook
         ]);
     }
 
-    /**
-     * @testdox Hook can be initiated connector passed.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('Hook can be initiated connector passed')]
     public function initiateHookWithConnector()
     {
         $connector = new ExamplesConnector();

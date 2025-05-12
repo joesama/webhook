@@ -22,15 +22,15 @@
         }
     },
     "require": {
-        "php": "^8.1",
-        "guzzlehttp/guzzle": "^7.8.0",
-        "nesbot/carbon": "^2.71.0",
-        "illuminate/support": "^10.10"
+        "php": "^8.2",
+        "illuminate/support": "v12.1.1",
+        "guzzlehttp/guzzle": "^7.9",
+        "nesbot/carbon": "^3.9"
     },
     "require-dev": {
-        "orchestra/testbench": "^8.14",
+        "orchestra/testbench": "^10.1",
         "pheromone/phpcs-security-audit": "^2.0",
-        "phpstan/phpstan": "^1.10"
+        "phpstan/phpstan": "^2.1"
     },
     "extra": {
         "laravel": {
@@ -40,12 +40,15 @@
         }
     },
     "scripts": {
-        "testing": [
-            "vendor/bin/phpunit tests/Feature/TestHook.php",
-            "vendor/bin/phpunit tests/Feature/HookConnectorTest.php",
-            "vendor/bin/phpunit tests/Unit/TestConfig.php"
+        "test": [
+            "@php vendor/bin/phpunit tests/Feature/TestHook.php --display-phpunit-deprecations",
+            "@php vendor/bin/phpunit tests/Feature/HookConnectorTest.php --display-phpunit-deprecations",
+            "@php vendor/bin/phpunit tests/Unit/TestConfig.php --display-phpunit-deprecations"
+        ],
+        "lint": [
+            "@php vendor/bin/phpstan analyse src tests --verbose --ansi"
         ]
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

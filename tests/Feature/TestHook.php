@@ -5,6 +5,8 @@ namespace Joesama\Webhook\Tests\Feature;
 use GuzzleHttp\RequestOptions;
 use Joesama\Webhook\Tests\AbstractTestCase;
 use Joesama\Webhook\Web\Hook;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 
 class TestHook extends AbstractTestCase
 {
@@ -18,13 +20,8 @@ class TestHook extends AbstractTestCase
         $this->mock(Hook::class)->shouldReceive('__contructor');
     }
 
-    /**
-     * @testdox Hook can be initiated without parameter passed.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('Hook can be initiated without parameter passed')]
     public function initiateHookWithOutParameter()
     {
         $hook = new Hook();
@@ -38,13 +35,8 @@ class TestHook extends AbstractTestCase
         $this->connectorIdIsEqual($hook, null);
     }
 
-    /**
-     * @testdox Hook can be initiated with empty array parameter passed.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('Hook can be initiated with empty array parameter passed')]
     public function initiateHookWithEmptyArray()
     {
         $hook = new Hook([]);
@@ -58,13 +50,8 @@ class TestHook extends AbstractTestCase
         $this->connectorIdIsEqual($hook, null);
     }
 
-    /**
-     * @testdox Hook can be initiated with array parameter passed.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('Hook can be initiated with array parameter passed')]
     public function initiateHookWithArray()
     {
         $config = [
@@ -82,13 +69,8 @@ class TestHook extends AbstractTestCase
         $this->connectorIdIsEqual($hook, null);
     }
 
-    /**
-     * @testdox set webhook configurable.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('set webhook configurable')]
     public function setHookConfigurable()
     {
         $config = [
@@ -102,13 +84,8 @@ class TestHook extends AbstractTestCase
         $this->configsIsEqual($hook, $config);
     }
 
-    /**
-     * @testdox set webhook request header.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('set webhook request header')]
     public function setHookRequestHeader()
     {
         $config = [
@@ -122,14 +99,8 @@ class TestHook extends AbstractTestCase
         $this->configsIsEqual($hook, ['headers' => $config]);
     }
 
-    /**
-     * @testdox set webhook array request body.
-     * Array is not valid request body parameter.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('Set webhook array request body. Array is not valid request body parameter')]
     public function setHookArrayRequestBody()
     {
         $config = [
@@ -145,13 +116,8 @@ class TestHook extends AbstractTestCase
         $this->optionIsEqual($hook, ['array' => $config]);
     }
 
-    /**
-     * @testdox set webhook json request body.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('set webhook json request body')]
     public function setHookJsonRequestBody()
     {
         $config = [
@@ -172,13 +138,8 @@ class TestHook extends AbstractTestCase
         $this->optionIsEqual($hook, [RequestOptions::JSON => $config]);
     }
 
-    /**
-     * @testdox set webhook multi part request body.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('set webhook multi part request body')]
     public function setHookMultiPartRequestBody()
     {
         $config = [
@@ -199,13 +160,8 @@ class TestHook extends AbstractTestCase
         $this->optionIsEqual($hook, [RequestOptions::MULTIPART => $config]);
     }
 
-    /**
-     * @testdox set webhook form params request body.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('set webhook form params request body')]
     public function setHookFormParamsRequestBody()
     {
         $config = [
@@ -226,13 +182,8 @@ class TestHook extends AbstractTestCase
         $this->optionIsEqual($hook, [RequestOptions::FORM_PARAMS => $config]);
     }
 
-    /**
-     * @testdox get webhook response.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('get webhook response')]
     public function getHookResponse()
     {
         $this->expectException('Joesama\Webhook\Exceptions\WebHookException');

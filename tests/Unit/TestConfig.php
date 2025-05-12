@@ -5,6 +5,8 @@ namespace Joesama\Webhook\Tests\Unit;
 use GuzzleHttp\RequestOptions;
 use Joesama\Webhook\Tests\AbstractTestCase;
 use Joesama\Webhook\Web\Config;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 use TypeError;
 
 class TestConfig extends AbstractTestCase
@@ -39,13 +41,8 @@ class TestConfig extends AbstractTestCase
         ]);
     }
 
-    /**
-     * @testdox Config can be initiated when array parameter passed.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('Config can be initiated when array parameter passed')]
     public function initiateConfigWithArrayParameter()
     {
         $array = [
@@ -68,13 +65,8 @@ class TestConfig extends AbstractTestCase
         $this->assertEquals($array, $config->toArray());
     }
 
-    /**
-     * @testdox Config can be initiated when string parameter passed.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('Config can be initiated when string parameter passed')]
     public function initiateConfigWithStringParameter()
     {
         $config = new Config('webhooks.test');
@@ -86,13 +78,8 @@ class TestConfig extends AbstractTestCase
         $this->assertEquals(config('webhooks.test'), $config->toArray());
     }
 
-    /**
-     * @testdox Config can be initiated when config file name passed as parameter.
-     *
-     * @test
-     *
-     * @return void
-     */
+    #[Test]
+    #[TestDox('Config can be initiated when config file name passed as parameter')]
     public function initiateConfigWithConfigFileNameAsParameter()
     {
         $config = new Config('test');
