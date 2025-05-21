@@ -38,6 +38,7 @@ class TestConfig extends AbstractTestCase
             RequestOptions::MULTIPART => ['content' => RequestOptions::MULTIPART],
             RequestOptions::QUERY => ['content' => RequestOptions::QUERY],
             Config::REQUEST_URI => ['content' => Config::REQUEST_URI],
+            Config::HEADERS => ['Content-type' => 'application/json'],
         ]);
     }
 
@@ -52,6 +53,7 @@ class TestConfig extends AbstractTestCase
             RequestOptions::MULTIPART => ['content' => RequestOptions::MULTIPART],
             RequestOptions::QUERY => ['content' => RequestOptions::QUERY],
             Config::REQUEST_URI => ['content' => Config::REQUEST_URI],
+            Config::HEADERS => ['Content-type' => 'application/json'],
         ];
 
         $config = new Config($array);
@@ -59,6 +61,8 @@ class TestConfig extends AbstractTestCase
         $this->assertNotEquals($array, $config->configs);
 
         $this->assertEmpty($config->configs);
+
+        $this->assertNotEmpty($config->headers);
 
         $this->assertIsArray($config->toArray());
 
@@ -75,6 +79,8 @@ class TestConfig extends AbstractTestCase
 
         $this->assertNotEmpty($config->configs);
 
+        $this->assertNotEmpty($config->headers);
+
         $this->assertEquals(config('webhooks.test'), $config->toArray());
     }
 
@@ -87,6 +93,8 @@ class TestConfig extends AbstractTestCase
         $this->assertNotEmpty($config->hooks);
 
         $this->assertNotEmpty($config->configs);
+
+        $this->assertNotEmpty($config->headers);
 
         $this->assertEquals(config('webhooks.test'), $config->toArray());
     }

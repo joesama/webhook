@@ -18,11 +18,23 @@ class Config
     public const REQUEST_URI = 'request';
 
     /**
+     * Default webhook request key.
+     */
+    public const HEADERS = 'headers';
+
+    /**
      * Http configuration parameters.
      *
      * @var array
      */
     public array $configs;
+
+    /**
+     * WebHook headers parameters.
+     *
+     * @var array
+     */
+    public array $headers;
 
     /**
      * WebHook configuration parameters.
@@ -49,6 +61,8 @@ class Config
         $this->configs = $this->excludeBodyConfig();
 
         $this->hooks = $this->configurable->get(self::REQUEST_URI, []);
+
+        $this->headers = $this->configurable->get(self::HEADERS, []);
     }
 
     /**
@@ -63,6 +77,7 @@ class Config
             RequestOptions::MULTIPART,
             RequestOptions::QUERY,
             self::REQUEST_URI,
+            self::HEADERS
         ])->toArray();
     }
 
