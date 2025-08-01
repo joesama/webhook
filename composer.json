@@ -23,7 +23,7 @@
     },
     "require": {
         "php": "^8.2",
-        "illuminate/support": "v12.1.1",
+        "illuminate/support": "v12.*|v11.*|v10.*",
         "guzzlehttp/guzzle": "^7.9",
         "nesbot/carbon": "^3.9"
     },
