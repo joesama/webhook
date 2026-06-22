@@ -22,15 +22,15 @@
         }
     },
     "require": {
-        "php": "^8.2",
-        "illuminate/support": "v12.*|v11.*|v10.*",
-        "guzzlehttp/guzzle": "^7.9",
-        "nesbot/carbon": "^3.9"
+        "php": "^8.3",
+        "illuminate/support": "v13.*|v12.*|v11.*|v10.*",
+        "guzzlehttp/guzzle": "^7.12.1",
+        "nesbot/carbon": "^3.13"
     },
     "require-dev": {
-        "orchestra/testbench": "^10.1",
-        "pheromone/phpcs-security-audit": "^2.0",
-        "phpstan/phpstan": "^2.1"
+        "orchestra/testbench": "^10.11",
+        "pheromone/phpcs-security-audit": "^2.0.1",
+        "phpstan/phpstan": "^2.2.2"
     },
     "extra": {
         "laravel": {
